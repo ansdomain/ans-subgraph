@@ -12,7 +12,7 @@ dataSources:
     source:
       address: "0xcCb2AeA8e96B7107CE873dcF0c011F0927E49d0E"
       abi: AnsRegistry
-      startBlock: 806640
+      startBlock: 806635
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -89,7 +89,7 @@ dataSources:
     source:
       address: "0x16Ac1fe465c9Db4FD65b3b034c11D56Feff8a3bD"
       abi: BaseRegistrar
-      startBlock: 806789
+      startBlock: 806788
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -115,9 +115,9 @@ dataSources:
     name: ArbRegistrarController
     network: arbitrum-goerli
     source:
-      address: "0xc6A70cd44B083c8Dc0AaD36381591675B0350D1B"
+      address: "0x0871715D6C47Fc5E24bfcE7F1A806069BF0bc778"
       abi: ArbRegistrarController
-      startBlock: 834354
+      startBlock: 	960666
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
