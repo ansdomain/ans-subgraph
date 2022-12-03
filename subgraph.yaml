@@ -1,4 +1,4 @@
-specVersion: 0.0.3
+specVersion: 0.0.4
 description: >-
   A secure & decentralized way to address resources on and off the blockchain
   using simple, human-readable names. Access domains and transfer history.
@@ -7,23 +7,23 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: ANSRegistry
-    network: arbitrum-goerli
+    name: ENSRegistry
+    network: goerli
     source:
-      address: "0xcCb2AeA8e96B7107CE873dcF0c011F0927E49d0E"
-      abi: AnsRegistry
-      startBlock: 806635
+      address: "0x01Df34D897f66FF130CbA3C56d7fB6d1BC79eBe1"
+      abi: EnsRegistry
+      startBlock: 8064594
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: ./src/ansRegistry.ts
+      file: ./src/ensRegistry.ts
       entities:
         - Domain
         - Account
         - Resolver
       abis:
-        - name: AnsRegistry
+        - name: EnsRegistry
           file: ./abis/Registry.json
       eventHandlers:
         - event: "Transfer(indexed bytes32,address)"
@@ -34,12 +34,13 @@ dataSources:
           handler: handleNewResolver
         - event: "NewTTL(indexed bytes32,uint64)"
           handler: handleNewTTL
-  
   - kind: ethereum/contract
     name: Resolver
-    network: arbitrum-goerli
+    network: goerli
     source:
+      address: "0x2bB117Bee0DB4D64fA0f6e7728BD07baA839e50c"
       abi: Resolver
+      startBlock: 8064633
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -85,16 +86,16 @@ dataSources:
           handler: handleVersionChanged
   - kind: ethereum/contract
     name: BaseRegistrar
-    network: arbitrum-goerli
+    network: goerli
     source:
-      address: "0x16Ac1fe465c9Db4FD65b3b034c11D56Feff8a3bD"
+      address: "0x04CC8940CF978d05755E0138847783947c7059B3"
       abi: BaseRegistrar
-      startBlock: 806788
+      startBlock: 8064613
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: ./src/arbRegistrar.ts
+      file: ./src/ethRegistrar.ts
       entities:
         - Registration
         - NameRegistered
@@ -110,24 +111,23 @@ dataSources:
           handler: handleNameRenewed
         - event: "Transfer(indexed address,indexed address,indexed uint256)"
           handler: handleNameTransferred
-
   - kind: ethereum/contract
-    name: ArbRegistrarController
-    network: arbitrum-goerli
+    name: EthRegistrarController
+    network: goerli
     source:
-      address: "0x0871715D6C47Fc5E24bfcE7F1A806069BF0bc778"
-      abi: ArbRegistrarController
-      startBlock: 	960666
+      address: "0xe8f73bcfe882F5Cd49DCd4c5049c49Fa98607dCC"
+      abi: EthRegistrarController
+      startBlock: 8064626
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
-      file: ./src/arbRegistrar.ts
+      file: ./src/ethRegistrar.ts
       entities:
         - Registration
       abis:
-        - name: ArbRegistrarController
-          file: ./abis/ArbRegistrarController.json
+        - name: EthRegistrarController
+          file: ./abis/EthRegistrarController.json
       eventHandlers:
         - event: >-
             NameRegistered(string,indexed bytes32,indexed
@@ -137,9 +137,11 @@ dataSources:
           handler: handleNameRenewedByController
   - kind: ethereum/contract
     name: NameWrapper
-    network: arbitrum-goerli
+    network: goerli
     source:
+      address: "0xc74573988365C8e99de5ECC391b9b92E4B70227B"
       abi: NameWrapper
+      startBlock: 8064624
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -157,26 +159,3 @@ dataSources:
           handler: handleNameUnwrapped
         - event: "FusesSet(indexed bytes32,uint32,uint64)"
           handler: handleFusesSet
-
-  - kind: ethereum/contract
-    name: ArbRegistrarControllerOld
-    network: arbitrum-goerli
-    source:
-      abi: ArbRegistrarControllerOld
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.5
-      language: wasm/assemblyscript
-      file: ./src/arbRegistrar.ts
-      entities:
-        - Registration
-      abis:
-        - name: ArbRegistrarControllerOld
-          file: ./abis/ArbRegistrarControllerOld.json
-      eventHandlers:
-        - event: >-
-            NameRegistered(string,indexed bytes32,indexed
-            address,uint256,uint256)
-          handler: handleNameRegisteredByControllerOld
-        - event: "NameRenewed(string,indexed bytes32,uint256,uint256)"
-          handler: handleNameRenewedByController   

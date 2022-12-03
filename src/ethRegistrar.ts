@@ -18,13 +18,9 @@ import {
 } from './types/BaseRegistrar/BaseRegistrar'
 
 import {
-  NameRegistered as ControllerNameRegisteredEventOld,
-} from './types/ArbRegistrarControllerOld/ArbRegistrarControllerOld'
-
-import {
   NameRegistered as ControllerNameRegisteredEvent,
   NameRenewed as ControllerNameRenewedEvent
-} from './types/ArbRegistrarController/ArbRegistrarController'
+} from './types/EthRegistrarController/EthRegistrarController'
 
 // Import entity types generated from the GraphQL schema
 import { Account, Domain, NameRegistered, NameRenewed, NameTransferred, Registration } from './types/schema'
@@ -61,10 +57,6 @@ export function handleNameRegistered(event: NameRegisteredEvent): void {
   registrationEvent.save()
 }
 
-export function handleNameRegisteredByControllerOld(event: ControllerNameRegisteredEventOld): void {
-  setNamePreimage(event.params.name, event.params.label, event.params.cost);
-}
-
 export function handleNameRegisteredByController(event: ControllerNameRegisteredEvent): void {
   setNamePreimage(event.params.name, event.params.label, event.params.baseCost.plus(event.params.premium))
 }
@@ -89,7 +81,7 @@ function setNamePreimage(name: string, label: Bytes, cost: BigInt): void {
   }
 
   let domain = Domain.load(crypto.keccak256(concat(rootNode, label)).toHex())!
-  if(domain.labelName !== name) {
+  if(domain.labelName == null || domain.labelName !== name) {
     domain.labelName = name
     domain.name = name + '.arb'
     domain.save()

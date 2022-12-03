@@ -127,7 +127,7 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "ans",
+    "name": "ens",
     "outputs": [
       {
         "name": "",
@@ -395,7 +395,7 @@
   {
     "inputs": [
       {
-        "name": "_ans",
+        "name": "_ens",
         "type": "address"
       },
       {

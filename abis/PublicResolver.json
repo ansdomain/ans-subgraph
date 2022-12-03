@@ -462,8 +462,8 @@
   {
     "inputs": [
       {
-        "internalType": "contract ANS",
-        "name": "_ans",
+        "internalType": "contract ENS",
+        "name": "_ens",
         "type": "address"
       }
     ],
